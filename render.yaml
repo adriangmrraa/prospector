@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: prospector
+    runtime: node
+    repo: https://github.com/adriangmrraa/prospector
+    plan: free
+    buildCommand: npm install; npm run db:push; npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_ENV
+        value: production
