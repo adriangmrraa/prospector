@@ -16,7 +16,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SOURCE_JSON = path.resolve(__dirname, "../../../Prospeccion/resultados/leads.json");
+const SOURCE_JSON = path.resolve(__dirname, "../../../resultados/leads.json");
 
 async function main() {
   if (!process.env.DATABASE_URL) {
