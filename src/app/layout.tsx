@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
+import { NavbarWrapper } from "@/components/navbar-wrapper";
+import { MainWrapper } from "@/components/main-wrapper";
 import { getSession } from "@/app/actions/auth";
 
 const inter = Inter({
@@ -40,10 +41,8 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-grid-pattern">
-        <Navbar session={session} />
-        <main className="flex-1 container mx-auto px-4 sm:px-6 py-8">
-          {children}
-        </main>
+        <NavbarWrapper session={session} />
+        <MainWrapper>{children}</MainWrapper>
       </body>
     </html>
   );
