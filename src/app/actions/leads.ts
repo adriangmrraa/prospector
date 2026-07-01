@@ -44,6 +44,10 @@ export async function getStats() {
     .select({ count: sql<number>`count(*)` })
     .from(leads)
     .where(sql`${leads.scrapedInstagram} IS NOT NULL`);
+  const withWebsite = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(leads)
+    .where(sql`${leads.website} IS NOT NULL`);
 
   const barrios = await db
     .select({ barrio: leads.barrio, count: sql<number>`count(*)` })
@@ -59,6 +63,7 @@ export async function getStats() {
     withCoords: Number(withCoords[0]?.count || 0),
     withWhatsapp: Number(withWhatsapp[0]?.count || 0),
     withInstagram: Number(withInstagram[0]?.count || 0),
+    withWebsite: Number(withWebsite[0]?.count || 0),
     barrios: barrios.slice(0, 10),
   };
 }

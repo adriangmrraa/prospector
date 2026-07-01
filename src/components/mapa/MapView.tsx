@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import type { Lead } from "@/db/schema";
 import { calculateTspRoute, calculateTotalDistance } from "@/lib/route-planner";
+import { MapPin, Navigation, Route, Crosshair } from "lucide-react";
 
 // Leaflet must be imported dynamically (no SSR)
 const MapContainer = dynamic(() => import("react-leaflet").then((m) => m.MapContainer), { ssr: false });
@@ -12,13 +13,14 @@ const Marker = dynamic(() => import("react-leaflet").then((m) => m.Marker), { ss
 const Popup = dynamic(() => import("react-leaflet").then((m) => m.Popup), { ssr: false });
 const Polyline = dynamic(() => import("react-leaflet").then((m) => m.Polyline), { ssr: false });
 
+
+
 interface MapViewProps {
   leads: Lead[];
   showOnlyRouted?: boolean;
   height?: string;
 }
 
-type LeafletIcon = ReturnType<typeof import("leaflet").divIcon>;
 type LeafletLatLng = [number, number];
 
 export default function MapView({ leads, showOnlyRouted = false, height = "100%" }: MapViewProps) {
@@ -26,12 +28,12 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
   const [locationError, setLocationError] = useState<string | null>(null);
   const [L, setL] = useState<typeof import("leaflet") | null>(null);
   const [mounted, setMounted] = useState(false);
+  const mapRef = useRef<any>(null);
 
-  // Load leaflet icons (fix for webpack)
+  // Load leaflet icons
   useEffect(() => {
     (async () => {
       const leaflet = await import("leaflet");
-      // Fix default icon paths
       delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
       leaflet.Icon.Default.mergeOptions({
         iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -54,8 +56,8 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
       (position) => {
         setUserLocation([position.coords.latitude, position.coords.longitude]);
       },
-      (err) => {
-        setLocationError("No se pudo obtener tu ubicación: " + err.message);
+      () => {
+        setLocationError("No se pudo obtener tu ubicación");
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -104,39 +106,51 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
   const userIcon = useMemo(() => {
     if (!L) return undefined;
     return L.divIcon({
-      className: "user-location-marker",
+      className: "",
       html: `<div style="
-        width: 24px; height: 24px; 
-        background: #3b82f6; 
-        border: 3px solid white; 
-        border-radius: 50%; 
-        box-shadow: 0 0 10px rgba(59,130,246,0.6);
-      "></div>`,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
+        width: 28px; height: 28px;
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        border: 3px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(99,102,241,0.3), 0 2px 8px rgba(0,0,0,0.2);
+        display: flex; align-items: center; justify-content: center;
+      ">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+        </svg>
+      </div>`,
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
     });
   }, [L]);
 
   const leadIcon = useMemo(() => {
     if (!L) return undefined;
     return L.divIcon({
-      className: "lead-marker",
+      className: "",
       html: `<div style="
-        width: 14px; height: 14px; 
-        background: #ef4444; 
-        border: 2px solid white; 
-        border-radius: 50%; 
-        box-shadow: 0 0 6px rgba(239,68,68,0.4);
+        width: 16px; height: 16px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        border: 2.5px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px rgba(239,68,68,0.25), 0 2px 6px rgba(0,0,0,0.15);
       "></div>`,
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
     });
   }, [L]);
 
+  const locatorUser = () => {
+    if (userLocation && mapRef.current) {
+      mapRef.current.flyTo(userLocation, 15, { duration: 1.5 });
+    }
+  };
+
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center h-full bg-muted rounded-lg">
-        <p className="text-muted-foreground">Cargando mapa...</p>
+      <div className="flex flex-col items-center justify-center h-full bg-surface rounded-2xl gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-brand-500 border-t-transparent animate-spin" />
+        <p className="text-sm text-muted-foreground">Cargando mapa...</p>
       </div>
     );
   }
@@ -146,8 +160,9 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
       <MapContainer
         center={center}
         zoom={13}
-        className="rounded-lg border shadow-sm w-full h-full"
+        className="w-full h-full"
         scrollWheelZoom={true}
+        ref={mapRef}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -158,10 +173,14 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
         {userLocation && userIcon && (
           <Marker position={userLocation} icon={userIcon}>
             <Popup>
-              <div className="text-sm">
-                <strong>📌 Tu ubicación</strong>
-                <br />
-                {userLocation[0].toFixed(6)}, {userLocation[1].toFixed(6)}
+              <div className="space-y-1">
+                <p className="font-semibold text-sm flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-brand-500 inline-block" />
+                  Tu ubicación
+                </p>
+                <p className="text-xs text-muted-foreground font-mono">
+                  {userLocation[0].toFixed(6)}, {userLocation[1].toFixed(6)}
+                </p>
               </div>
             </Popup>
           </Marker>
@@ -169,40 +188,43 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
 
         {/* Lead markers */}
         {leadIcon &&
-          validLeads.map((lead) => (
+          (showOnlyRouted ? validLeads.filter((l) => l.routeOrder) : validLeads).map((lead) => (
             <Marker
               key={lead.id}
               position={[lead.lat, lead.lng]}
               icon={leadIcon}
             >
               <Popup>
-                <div className="text-sm max-w-[250px]">
-                  <strong className="text-base">{lead.nombre}</strong>
+                <div className="space-y-2 max-w-[240px]">
+                  <p className="font-semibold text-sm leading-tight">{lead.nombre}</p>
                   {lead.rating && (
-                    <span className="ml-1 text-yellow-500">
-                      ★ {lead.rating}
-                    </span>
+                    <div className="flex items-center gap-1 text-xs">
+                      <span className="text-amber-500">★</span>
+                      <span className="font-medium">{lead.rating}</span>
+                    </div>
                   )}
-                  <br />
-                  {lead.direccion && <span className="text-muted-foreground">{lead.direccion}</span>}
+                  {lead.direccion && (
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {lead.direccion}
+                    </p>
+                  )}
                   {lead.telefono && (
-                    <>
-                      <br />
-                      <span>📞 {lead.telefono}</span>
-                    </>
+                    <a
+                      href={`tel:${lead.telefono}`}
+                      className="block text-xs text-brand-500 hover:text-brand-600 font-medium"
+                    >
+                      📞 {lead.telefono}
+                    </a>
                   )}
                   {lead.scrapedWhatsapp && (
-                    <>
-                      <br />
-                      <a
-                        href={lead.scrapedWhatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-green-600 hover:underline"
-                      >
-                        💬 WhatsApp
-                      </a>
-                    </>
+                    <a
+                      href={lead.scrapedWhatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-xs text-emerald-500 hover:text-emerald-600 font-medium"
+                    >
+                      💬 WhatsApp
+                    </a>
                   )}
                 </div>
               </Popup>
@@ -213,32 +235,47 @@ export default function MapView({ leads, showOnlyRouted = false, height = "100%"
         {routeLatLngs.length > 1 && (
           <Polyline
             positions={routeLatLngs}
-            color="#3b82f6"
+            color="#6366f1"
             weight={3}
-            opacity={0.7}
-            dashArray="10, 10"
+            opacity={0.6}
+            dashArray="8, 10"
           />
         )}
       </MapContainer>
 
       {/* Info overlay */}
-      <div className="absolute top-3 left-3 z-[1000] space-y-1">
-        <div className="bg-background/90 backdrop-blur-sm rounded-lg shadow p-2 text-xs">
-          <span className="font-medium">📍 {validLeads.length} clínicas</span>
+      <div className="absolute top-3 left-3 z-[1000] flex flex-col gap-1.5">
+        <div className="glass-strong rounded-xl shadow-lg px-3.5 py-2 text-xs font-medium">
+          <span className="flex items-center gap-1.5">
+            <MapPin className="h-3.5 w-3.5 text-red-500" />
+            {validLeads.length} clínicas
+          </span>
         </div>
         {route.length > 1 && (
-          <div className="bg-background/90 backdrop-blur-sm rounded-lg shadow p-2 text-xs">
-            <span className="font-medium">🛣️ {totalDistance} km (ruta óptima)</span>
+          <div className="glass-strong rounded-xl shadow-lg px-3.5 py-2 text-xs font-medium">
+            <span className="flex items-center gap-1.5">
+              <Route className="h-3.5 w-3.5 text-brand-500" />
+              {totalDistance} km (ruta óptima)
+            </span>
           </div>
         )}
         {userLocation && (
-          <div className="bg-blue-500/90 text-white rounded-lg shadow p-2 text-xs">
-            📌 Tu ubicación
-          </div>
+          <button
+            onClick={locatorUser}
+            className="glass-strong rounded-xl shadow-lg px-3.5 py-2 text-xs font-medium text-left hover:bg-surface-hover transition-colors cursor-pointer"
+          >
+            <span className="flex items-center gap-1.5">
+              <Navigation className="h-3.5 w-3.5 text-brand-500" />
+              Mi ubicación
+            </span>
+          </button>
         )}
         {locationError && (
-          <div className="bg-yellow-500/90 text-white rounded-lg shadow p-2 text-xs">
-            ⚠️ {locationError}
+          <div className="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 shadow-lg px-3.5 py-2 text-xs font-medium text-amber-700 dark:text-amber-400">
+            <span className="flex items-center gap-1.5">
+              <Crosshair className="h-3.5 w-3.5" />
+              {locationError}
+            </span>
           </div>
         )}
       </div>
