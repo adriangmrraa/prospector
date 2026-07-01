@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_MESSAGE =
-  "Hola! Te contactamos desde nuestro sistema de gestion para clinicas...";
+  "Hola! Tenemos un software excelente, que ahorra decenas de horas semanales a Clinicas en todo LATAM. Nuestro objetivo es que centralices y delegues a un sistema que ayuda enserio a la clinica o centro dental! Profesionales que ya trabajan con nosotros estan ahorrando horas todos los dias, delegando acciones o chateando con la informacion de sus pacientes. Tenemos una demo lista para que la pruebes sin costo y sin compromiso. Si te interesa saber mas, podemos coordinar una demo mas inmersiva donde pueda ver internamente la plataforma, entender funciones y como operarias diariamente con el sistema...";
 
 interface WhatsAppButtonProps {
   phone: string | null | undefined;
