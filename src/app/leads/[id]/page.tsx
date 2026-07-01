@@ -2,6 +2,7 @@ import { getLeadById } from "@/app/actions/leads";
 import { notFound } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { VisitPanel } from "@/components/visit-panel";
 import {
   MapPin, Phone, MessageCircle, Mail, Camera, Globe, Star, ArrowLeft,
   Clock, Route, ExternalLink, ChevronRight,
@@ -167,6 +168,9 @@ export default async function LeadDetailPage({
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* Visita de campo — CRM */}
+          <VisitPanel leadId={lead.id} />
+
           {/* Contact */}
           <Card>
             <CardHeader>
