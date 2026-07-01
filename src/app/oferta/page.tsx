@@ -9,15 +9,9 @@ function waUrl(phone: string, text: string) {
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 
-// Mensajes cortos para prellenado de WhatsApp (evita truncamiento en mobile)
-const waMessages = [
-  "Hola! Te contactamos desde DentalForge, nuestro sistema de gestión con IA para clínicas dentales. Te dejo la demo para que la pruebes sin costo!",
-  "Buenas! Te escribimos de DentalForge, un software que ahorra decenas de horas semanales a clínicas dentales. Probá la demo gratuita!",
-  "Hola! Tenemos un asistente IA para clínicas dentales que agenda turnos y atiende pacientes 24/7. Te dejo la demo para que la veas!",
-  "Buenas! Les compartimos DentalForge, nuestro sistema de gestión clínica con IA que recupera horas de tu equipo todos los días. Demo gratuita!",
-  "Hola! Te presentamos DentalForge, el software que está ayudando a clínicas en LATAM a ahorrar horas todos los días. Probá la demo sin costo!",
-  "Buenas! Tenemos un sistema para clínicas dentales con IA que atiende pacientes automáticamente. Te paso la demo gratuita!",
-];
+const waLead = "Hola! Tenemos un software excelente, que ahorra decenas de horas semanales a Clinicas en todo LATAM. Nuestro objetivo es que centralices y delegues a un sistema que ayuda enserio a la clinica o centro dental! Profesionales que ya trabajan con nosotros estan ahorrando horas todos los dias, delegando acciones o chateando con la informacion de sus pacientes. Tenemos una demo lista para que la pruebes sin costo y sin compromiso. Si te interesa saber mas, podemos coordinar una demo mas inmersiva donde pueda ver internamente la plataforma, entender funciones y como operarias diariamente con el sistema...";
+
+const waMessages = [waLead, waLead, waLead, waLead, waLead, waLead];
 
 function getWaUrls(phone: string): { header: string; cta: string; final: string } {
   const dayOffset = new Date().getDate();
