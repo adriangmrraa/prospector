@@ -55,6 +55,27 @@ export const leads = pgTable("leads", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// ─── Lead Visits (CRM de Campo) ─────────────────────────────────────────────────
+
+export const leadVisits = pgTable("lead_visits", {
+  id: serial("id").primaryKey(),
+  leadId: integer("lead_id")
+    .notNull()
+    .references(() => leads.id, { onDelete: "cascade" }),
+  visitDate: timestamp("visit_date").defaultNow().notNull(),
+  contactName: varchar("contact_name", { length: 200 }),
+  contactPhone: varchar("contact_phone", { length: 100 }),
+  status: varchar("status", { length: 20 }).notNull().default("pending"), // pending | visited
+  trafficLight: varchar("traffic_light", { length: 10 }), // green | yellow | red
+  demoShown: boolean("demo_shown"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export type LeadVisit = typeof leadVisits.$inferSelect;
+export type NewLeadVisit = typeof leadVisits.$inferInsert;
+
 // ─── Users ──────────────────────────────────────────────────────────────────────
 
 export const users = pgTable("users", {
