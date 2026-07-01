@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MapPin, LayoutDashboard, List, LogOut, User } from "lucide-react";
+import { MapPin, LayoutDashboard, List, LogOut, User, BookOpen } from "lucide-react";
 
 const links = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/leads", label: "Leads", icon: List },
   { href: "/mapa", label: "Mapa", icon: MapPin },
+  { href: "/guia", label: "Guía", icon: BookOpen },
 ];
 
 interface NavbarProps {

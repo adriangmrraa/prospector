@@ -2,7 +2,7 @@ import {
   MessageCircle, ExternalLink, ShieldCheck, Zap, Clock, Smartphone,
   BrainCircuit, CalendarCheck, Headphones, TrendingUp, Users, HeartPulse,
   TimerReset, Sparkles, Bot, BarChart3, Mic, FileText, DollarSign,
-  CheckCircle2,
+  CheckCircle2, Send,
 } from "lucide-react";
 
 function waUrl(phone: string, text: string) {
@@ -224,7 +224,7 @@ export default function OfertaPage() {
         </section>
 
         {/* ─── CTA Cards ──────────────────────────────────────────── */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-16 sm:mb-24">
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16 sm:mb-24">
           {/* WhatsApp - Demo Agent */}
           <div className="relative group">
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-green-400/30 to-emerald-600/30 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -284,6 +284,40 @@ export default function OfertaPage() {
                 Abrir plataforma demo
                 <ExternalLink className="h-3.5 w-3.5 opacity-70" />
               </a>
+            </div>
+          </div>
+
+          {/* Telegram - Asistente Interno */}
+          <div className="relative group">
+            <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-sky-400/30 to-blue-600/30 blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative h-full rounded-2xl border border-border/60 bg-card p-6 sm:p-8 flex flex-col">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 rounded-xl bg-sky-50 dark:bg-sky-500/10">
+                  <Send className="h-6 w-6 text-sky-500" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold">Nova — Asistente Interno</h2>
+                  <p className="text-sm text-muted-foreground">Productividad del equipo por voz</p>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6 flex-1">
+                Conocé Nova, el asistente interno que trabaja con tu equipo por comandos
+                de voz. Registra evoluciones, prepara presupuestos, accede a la historia
+                clínica y consulta métricas — todo hablando.
+              </p>
+              <a
+                href="https://web.telegram.org/k/#@demodentalsbot"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/35 transition-all duration-200"
+              >
+                <Send className="h-4 w-4" />
+                Hablar con Nova
+                <ExternalLink className="h-3.5 w-3.5 opacity-70" />
+              </a>
+              <p className="text-xs text-muted-foreground mt-3 text-center">
+                Requiere usuario aprobado en Telegram. Consultá con tu asesor comercial.
+              </p>
             </div>
           </div>
         </section>
