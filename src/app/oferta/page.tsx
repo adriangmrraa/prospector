@@ -9,13 +9,14 @@ function waUrl(phone: string, text: string) {
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 
+// Mensajes cortos para prellenado de WhatsApp (evita truncamiento en mobile)
 const waMessages = [
-  "Hola! Les traigo un software de gestión para clínicas dentales con IA integrada que ahorra muchísimas horas por semana. Trabajamos con centros en LATAM que ya están delegando la atención al sistema. Tengo una demo lista para que la prueben sin costo.",
-  "Hola! Tenemos un software que ahorra decenas de horas semanales a clínicas en todo LATAM. El objetivo es centralizar y delegar la gestión diaria a un sistema que ayuda en serio al centro dental. Hay una demo lista para probar sin compromiso.",
-  "Buenas! Les escribo porque tenemos un sistema para clínicas dentales que está ayudando a centros en toda LATAM a ahorrar decenas de horas semanales. Profesionales que ya lo usan delegan la atención al paciente al sistema todos los días. La demo está lista para que la vean sin costo.",
-  "Hola! Desarrollamos un software de gestión clínica con IA que atiende pacientes automáticamente y recupera horas del equipo todos los días. Varios centros en LATAM ya lo están usando. Te paso el link de la demo para que lo pruebes sin compromiso.",
-  "Buenas! Tenemos un asistente IA para clínicas dentales que agenda turnos, responde consultas y gestiona pacientes 24/7. Los centros que ya lo implementaron están ahorrando horas todos los días. Te dejo la demo gratuita para que la veas.",
-  "Hola! Tenemos un software excelente que ahorra decenas de horas semanales a clínicas en todo LATAM. Profesionales que ya trabajan con nosotros están ahorrando tiempo todos los días delegando acciones o chateando con la información de sus pacientes. Hay una demo gratuita lista para probar.",
+  "Hola! Te contactamos desde DentalForge, nuestro sistema de gestión con IA para clínicas dentales. Te dejo la demo para que la pruebes sin costo!",
+  "Buenas! Te escribimos de DentalForge, un software que ahorra decenas de horas semanales a clínicas dentales. Probá la demo gratuita!",
+  "Hola! Tenemos un asistente IA para clínicas dentales que agenda turnos y atiende pacientes 24/7. Te dejo la demo para que la veas!",
+  "Buenas! Les compartimos DentalForge, nuestro sistema de gestión clínica con IA que recupera horas de tu equipo todos los días. Demo gratuita!",
+  "Hola! Te presentamos DentalForge, el software que está ayudando a clínicas en LATAM a ahorrar horas todos los días. Probá la demo sin costo!",
+  "Buenas! Tenemos un sistema para clínicas dentales con IA que atiende pacientes automáticamente. Te paso la demo gratuita!",
 ];
 
 function getWaUrls(phone: string): { header: string; cta: string; final: string } {
