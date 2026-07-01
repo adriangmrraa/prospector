@@ -9,9 +9,14 @@ function waUrl(phone: string, text: string) {
   return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 
-const waLead = "Hola! Tenemos un software excelente, que ahorra decenas de horas semanales a Clinicas en todo LATAM. Nuestro objetivo es que centralices y delegues a un sistema que ayuda enserio a la clinica o centro dental! Profesionales que ya trabajan con nosotros estan ahorrando horas todos los dias, delegando acciones o chateando con la informacion de sus pacientes. Tenemos una demo lista para que la pruebes sin costo y sin compromiso. Si te interesa saber mas, podemos coordinar una demo mas inmersiva donde pueda ver internamente la plataforma, entender funciones y como operarias diariamente con el sistema...";
-
-const waMessages = [waLead, waLead, waLead, waLead, waLead, waLead];
+const waMessages = [
+  "Hola! Quiero sacar un turno para una consulta general",
+  "Buenas! Necesito un turno para hacerme una limpieza dental",
+  "Hola! Quisiera agendar una consulta para la semana que viene",
+  "Buenas! Me gustaria sacar turno para una consulta, gracias",
+  "Hola! Necesito un turno lo antes posible para una urgencia",
+  "Buenas! Quiero agendar un turno para un tratamiento de conducto",
+];
 
 // Rotacion diaria para los botones de prospeccion (CTA + final → TORA)
 function getAgentWaUrls(phone: string): { cta: string; final: string } {
