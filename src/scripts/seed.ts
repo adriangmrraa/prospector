@@ -8,7 +8,13 @@
  * El JSON de origen se lee de: ../Prospeccion/resultados/leads.json
  */
 
-import "dotenv/config";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
+import * as path from "path";
+
+const __dirname$ = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.resolve(__dirname$, "../../.env.local");
+dotenv.config({ path: envPath });
 import { db } from "../db";
 import { leads } from "../db/schema";
 import * as fs from "fs";
@@ -45,7 +51,7 @@ async function main() {
 
   for (const l of sourceLeads) {
     try {
-      await db.insert(leads).values({
+      const data = {
         placeId: l.place_id || null,
         nombre: l.nombre || "Sin nombre",
         direccion: l.direccion || null,
@@ -73,16 +79,20 @@ async function main() {
         mensajeWhatsapp: l.mensaje_whatsapp || null,
         mensajeInstagram: l.mensaje_instagram || null,
         routeOrder: l.route_order || null,
-      }).onConflictDoNothing();
+      };
+
+      await db
+        .insert(leads)
+        .values(data)
+        .onConflictDoUpdate({
+          target: leads.placeId,
+          set: { ...data, updatedAt: new Date() },
+        });
       inserted++;
     } catch (rawErr) {
       const err = rawErr as { code?: string; message?: string };
-      if (err.code === "23505") {
-        skipped++;
-      } else {
-        console.error(`  ❌ Error insertando "${l.nombre}": ${err.message || rawErr}`);
-        errors++;
-      }
+      console.error(`  ❌ Error insertando "${l.nombre}": ${err.message || rawErr}`);
+      errors++;
     }
 
     if (inserted % 50 === 0) {
@@ -92,8 +102,7 @@ async function main() {
 
   console.log("\n" + "=".repeat(50));
   console.log("✅ SEED COMPLETADO");
-  console.log(`   📥 Insertados: ${inserted}`);
-  console.log(`   ⏭️  Saltados (duplicados): ${skipped}`);
+  console.log(`   📥 Insertados/Actualizados: ${inserted}`);
   console.log(`   ❌ Errores: ${errors}`);
   console.log("=".repeat(50));
 }

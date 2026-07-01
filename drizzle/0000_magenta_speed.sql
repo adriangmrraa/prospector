@@ -1,0 +1,41 @@
+CREATE TABLE "leads" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"place_id" text,
+	"nombre" varchar(300) NOT NULL,
+	"direccion" text,
+	"barrio" varchar(200),
+	"ciudad" varchar(200) DEFAULT 'Córdoba',
+	"telefono" varchar(100),
+	"website" text,
+	"rating" numeric(3, 1),
+	"cant_reviews" integer,
+	"categoria" varchar(200),
+	"horarios" text,
+	"maps_url" text,
+	"lat" numeric(10, 7),
+	"lng" numeric(10, 7),
+	"termino_busqueda" varchar(200),
+	"instagram" varchar(300),
+	"facebook" varchar(300),
+	"scraped_email" text,
+	"scraped_whatsapp" text,
+	"scraped_instagram" varchar(200),
+	"scraped_facebook" text,
+	"scraped_description" text,
+	"website_scraped" boolean,
+	"website_error" varchar(50),
+	"mensaje_whatsapp" text,
+	"mensaje_instagram" text,
+	"route_order" integer,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "leads_place_id_unique" UNIQUE("place_id")
+);
+--> statement-breakpoint
+CREATE TABLE "users" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"username" varchar(100) NOT NULL,
+	"password_hash" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "users_username_unique" UNIQUE("username")
+);

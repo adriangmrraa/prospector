@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MapPin, LayoutDashboard, List, GitBranch } from "lucide-react";
+import { MapPin, LayoutDashboard, List, LogOut, User } from "lucide-react";
 
 const links = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -10,7 +10,11 @@ const links = [
   { href: "/mapa", label: "Mapa", icon: MapPin },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  session: { id: number; username: string } | null;
+}
+
+export function Navbar({ session }: NavbarProps) {
   const pathname = usePathname();
 
   return (
@@ -56,17 +60,24 @@ export function Navbar() {
             );
           })}
 
-          <div className="w-px h-5 bg-border mx-2" />
-
-          <a
-            href="https://github.com/adriangmrraa/prospector"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-muted-foreground hover:text-foreground hover:bg-surface-hover transition-colors"
-            title="Ver en GitHub"
-          >
-            <GitBranch className="h-4 w-4" />
-          </a>
+          {session && (
+            <>
+              <div className="w-px h-5 bg-border mx-1" />
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/50 text-xs text-muted-foreground">
+                <User className="h-3.5 w-3.5" />
+                <span className="font-medium">{session.username}</span>
+              </div>
+              <form action="/api/logout" method="post">
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+                  title="Cerrar sesión"
+                >
+                  <LogOut className="h-4 w-4" />
+                </button>
+              </form>
+            </>
+          )}
         </nav>
       </div>
     </header>
