@@ -1,5 +1,5 @@
 import { getLeads } from "@/app/actions/leads";
-import { LeadsTable } from "@/components/leads-table";
+import { LeadCardGrid } from "@/components/lead-card-grid";
 import { List } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +13,7 @@ export default async function LeadsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Leads</h1>
           <p className="text-muted-foreground mt-1">
-            <span className="font-medium text-foreground">{leads.length} clínicas</span> odontológicas en Córdoba Capital
+            <span className="font-medium text-foreground">{leads.length} clínicas</span> y centros estéticos en Córdoba Capital
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-brand-50 dark:bg-brand-500/10">
@@ -24,7 +24,7 @@ export default async function LeadsPage() {
         </div>
       </div>
 
-      <LeadsTable leads={leads} />
+      <LeadCardGrid leads={leads} />
     </div>
   );
 }
