@@ -11,17 +11,16 @@
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import * as path from "path";
-
-const __dirname$ = path.dirname(fileURLToPath(import.meta.url));
-const envPath = path.resolve(__dirname$, "../../.env.local");
-dotenv.config({ path: envPath });
+import * as fs from "fs";
 import { db } from "../db";
 import { leads } from "../db/schema";
-import * as fs from "fs";
-import * as path from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Cargar .env.local explícitamente (dotenv/config no funciona con ESM hoisting)
+dotenv.config({ path: path.resolve(__dirname, "../../.env.local") });
+
 const SOURCE_JSON = path.resolve(__dirname, "../../../resultados/leads.json");
 
 async function main() {
