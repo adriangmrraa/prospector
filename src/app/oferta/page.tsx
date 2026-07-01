@@ -13,22 +13,22 @@ const waLead = "Hola! Tenemos un software excelente, que ahorra decenas de horas
 
 const waMessages = [waLead, waLead, waLead, waLead, waLead, waLead];
 
-function getWaUrls(phone: string): { header: string; cta: string; final: string } {
+// Rotacion diaria para los botones de prospeccion (CTA + final → TORA)
+function getAgentWaUrls(phone: string): { cta: string; final: string } {
   const dayOffset = new Date().getDate();
-  const m1 = waMessages[dayOffset % waMessages.length];
-  const m2 = waMessages[(dayOffset + 1) % waMessages.length];
-  const m3 = waMessages[(dayOffset + 2) % waMessages.length];
   return {
-    header: waUrl(phone, m1),
-    cta: waUrl(phone, m2),
-    final: waUrl(phone, m3),
+    cta: waUrl(phone, waMessages[dayOffset % waMessages.length]),
+    final: waUrl(phone, waMessages[(dayOffset + 1) % waMessages.length]),
   };
 }
 
 export default function OfertaPage() {
-  const whatsappNumber = "5493704706902";
+  const ownerNumber = "5493704868421";
+  const agentNumber = "5493704706902";
   const platformUrl = "https://dentalforgepruebas-frontend.gvdlcu.easypanel.host/";
-  const waUrls = getWaUrls(whatsappNumber);
+  const ownerMsg = "Hola! Vengo de la pagina de DentalForge, me interesa el software de gestion para mi clinica";
+  const headerUrl = waUrl(ownerNumber, ownerMsg);
+  const agentUrls = getAgentWaUrls(agentNumber);
 
   return (
     <div className="min-h-screen bg-grid-pattern">
@@ -42,7 +42,7 @@ export default function OfertaPage() {
             <span className="text-sm font-semibold">DentalForge</span>
           </div>
           <a
-            href={waUrls.header}
+            href={headerUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-3 py-1.5 rounded-full hover:bg-green-100 dark:hover:bg-green-500/20 transition-colors"
@@ -239,7 +239,7 @@ export default function OfertaPage() {
                 de la clínica.
               </p>
               <a
-                href={waUrls.cta}
+                href={agentUrls.cta}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/35 transition-all duration-200"
@@ -395,7 +395,7 @@ export default function OfertaPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
-                href={waUrls.final}
+                href={agentUrls.final}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/35 transition-all duration-200 w-full sm:w-auto"
