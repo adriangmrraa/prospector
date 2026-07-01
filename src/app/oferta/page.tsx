@@ -5,9 +5,35 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+function waUrl(phone: string, text: string) {
+  return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+}
+
+const waMessages = [
+  "Hola! Les traigo un software de gestión para clínicas dentales con IA integrada que ahorra muchísimas horas por semana. Trabajamos con centros en LATAM que ya están delegando la atención al sistema. Tengo una demo lista para que la prueben sin costo.",
+  "Hola! Tenemos un software que ahorra decenas de horas semanales a clínicas en todo LATAM. El objetivo es centralizar y delegar la gestión diaria a un sistema que ayuda en serio al centro dental. Hay una demo lista para probar sin compromiso.",
+  "Buenas! Les escribo porque tenemos un sistema para clínicas dentales que está ayudando a centros en toda LATAM a ahorrar decenas de horas semanales. Profesionales que ya lo usan delegan la atención al paciente al sistema todos los días. La demo está lista para que la vean sin costo.",
+  "Hola! Desarrollamos un software de gestión clínica con IA que atiende pacientes automáticamente y recupera horas del equipo todos los días. Varios centros en LATAM ya lo están usando. Te paso el link de la demo para que lo pruebes sin compromiso.",
+  "Buenas! Tenemos un asistente IA para clínicas dentales que agenda turnos, responde consultas y gestiona pacientes 24/7. Los centros que ya lo implementaron están ahorrando horas todos los días. Te dejo la demo gratuita para que la veas.",
+  "Hola! Tenemos un software excelente que ahorra decenas de horas semanales a clínicas en todo LATAM. Profesionales que ya trabajan con nosotros están ahorrando tiempo todos los días delegando acciones o chateando con la información de sus pacientes. Hay una demo gratuita lista para probar.",
+];
+
+function getWaUrls(phone: string): { header: string; cta: string; final: string } {
+  const dayOffset = new Date().getDate();
+  const m1 = waMessages[dayOffset % waMessages.length];
+  const m2 = waMessages[(dayOffset + 1) % waMessages.length];
+  const m3 = waMessages[(dayOffset + 2) % waMessages.length];
+  return {
+    header: waUrl(phone, m1),
+    cta: waUrl(phone, m2),
+    final: waUrl(phone, m3),
+  };
+}
+
 export default function OfertaPage() {
   const whatsappNumber = "5493704706902";
   const platformUrl = "https://dentalforgepruebas-frontend.gvdlcu.easypanel.host/";
+  const waUrls = getWaUrls(whatsappNumber);
 
   return (
     <div className="min-h-screen bg-grid-pattern">
@@ -21,12 +47,11 @@ export default function OfertaPage() {
             <span className="text-sm font-semibold">DentalForge</span>
           </div>
           <a
-            href={`https://wa.me/${whatsappNumber}`}
+            href={waUrls.header}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-3 py-1.5 rounded-full hover:bg-green-100 dark:hover:bg-green-500/20 transition-colors"
           >
-            <MessageCircle className="h-3.5 w-3.5" />
             ¿Dudas? Chateá acá
           </a>
         </div>
@@ -219,7 +244,7 @@ export default function OfertaPage() {
                 de la clínica.
               </p>
               <a
-                href={`https://wa.me/${whatsappNumber}`}
+                href={waUrls.cta}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/35 transition-all duration-200"
@@ -375,7 +400,7 @@ export default function OfertaPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
-                href={`https://wa.me/${whatsappNumber}`}
+                href={waUrls.final}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/35 transition-all duration-200 w-full sm:w-auto"
