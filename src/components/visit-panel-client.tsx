@@ -89,27 +89,27 @@ export function VisitPanelClient({ leadId, existingVisit }: VisitPanelClientProp
     setFeedback(null);
 
     startTransition(async () => {
-      try {
-        await saveVisit({
-          leadId,
-          status,
-          contactName: contactName || null,
-          contactPhone: contactPhone || null,
-          trafficLight: trafficLight || null,
-          demoShown,
-          notes: notes || null,
-          visitDate: new Date(visitDate),
-        });
+      const result = await saveVisit({
+        leadId,
+        status,
+        contactName: contactName || null,
+        contactPhone: contactPhone || null,
+        trafficLight: trafficLight || null,
+        demoShown,
+        notes: notes || null,
+        visitDate: new Date(visitDate),
+      });
+
+      if (result.success) {
         setFeedback({
           type: "success",
           message: "Visita guardada correctamente",
         });
         router.refresh();
-      } catch (err) {
+      } else {
         setFeedback({
           type: "error",
-          message:
-            err instanceof Error ? err.message : "Error al guardar la visita",
+          message: result.error ?? "Error al guardar la visita",
         });
       }
     });

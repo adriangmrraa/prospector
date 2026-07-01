@@ -8,6 +8,7 @@ import {
   boolean,
   timestamp,
   jsonb,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const leads = pgTable("leads", {
@@ -71,7 +72,9 @@ export const leadVisits = pgTable("lead_visits", {
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  leadIdIdx: index("lead_visits_lead_id_idx").on(table.leadId),
+}));
 
 export type LeadVisit = typeof leadVisits.$inferSelect;
 export type NewLeadVisit = typeof leadVisits.$inferInsert;

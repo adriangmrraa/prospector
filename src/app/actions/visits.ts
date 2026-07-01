@@ -3,6 +3,7 @@
 import { db } from "@/db";
 import { leadVisits, type NewLeadVisit } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function getLatestVisit(leadId: number) {
   try {
@@ -30,9 +31,12 @@ export async function saveVisit(data: NewLeadVisit) {
       })
       .returning();
 
-    return created;
+    revalidatePath("/leads");
+    revalidatePath(`/leads/${data.leadId}`);
+
+    return { success: true, data: created, error: null };
   } catch (error) {
     console.error("Error saving visit:", error);
-    throw new Error("No se pudo guardar la visita");
+    return { success: false, data: null, error: "No se pudo guardar la visita" };
   }
 }
