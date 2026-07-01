@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 const SESSION_COOKIE = "session";
 
 // Rutas públicas que no requieren autenticación
-const PUBLIC_ROUTES = new Set(["/login"]);
+const PUBLIC_ROUTES = new Set(["/login", "/oferta"]);
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
