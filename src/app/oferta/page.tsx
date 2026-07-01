@@ -1,7 +1,8 @@
 import {
   MessageCircle, ExternalLink, ShieldCheck, Zap, Clock, Smartphone,
   BrainCircuit, CalendarCheck, Headphones, TrendingUp, Users, HeartPulse,
-  TimerReset, Sparkles, Bot, BarChart3,
+  TimerReset, Sparkles, Bot, BarChart3, Mic, FileText, DollarSign,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function OfertaPage() {
@@ -49,19 +50,151 @@ export default function OfertaPage() {
             Tu equipo se enfoca en atender, nosotros nos encargamos del resto.
           </p>
 
-          {/* Metricas rapìdas */}
+          {/* Metricas rápidas */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-8">
             {[
               { value: "40+", label: "horas semanales recuperadas" },
-              { value: "24/7", label: "atencion automatica" },
+              { value: "24/7", label: "atención automática" },
               { value: "-60%", label: "ausentismo en turnos" },
-              { value: "1 clic", label: "activacion del asistente" },
+              { value: "1 clic", label: "activación del asistente" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
                 <div className="text-2xl sm:text-3xl font-black text-brand-500">{value}</div>
                 <div className="text-xs text-muted-foreground mt-0.5 whitespace-nowrap">{label}</div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ─── TORA: CHATEA CON TU INFORMACIÓN ─────────────────── */}
+        <section className="mb-16 sm:mb-24">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 mb-4">
+              <MessageCircle className="h-6 w-6 text-brand-500" />
+            </div>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-3">
+              Chateá con <span className="text-brand-500">tu</span> información
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
+              TORA no es un chatbot genérico. Conoce los servicios de tu clínica,
+              los precios, la disponibilidad real de la agenda, tus promociones
+              activas y las preguntas frecuentes de tus pacientes. Chatea con tus
+              propios datos.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            {[
+              {
+                icon: CalendarCheck,
+                title: "Agenda turnos al instante",
+                desc: "El paciente consulta disponibilidad y agenda sin hablar con una persona. TORA conoce la agenda real, los horarios de cada profesional y las sedes disponibles. Sin idas y vueltas.",
+              },
+              {
+                icon: Headphones,
+                title: "Responde consultas 24/7",
+                desc: "Precios, horarios, promociones, direcciones, formas de pago. Todo lo que los pacientes preguntan mil veces, TORA lo responde al instante desde tu propia base de conocimientos.",
+              },
+              {
+                icon: HeartPulse,
+                title: "Atención omnicanal",
+                desc: "TORA atiende por WhatsApp, Instagram y Facebook Messenger. Un mismo asistente, un mismo cerebro, en todos los canales donde están tus pacientes.",
+              },
+              {
+                icon: BrainCircuit,
+                title: "Triaje clínico inteligente",
+                desc: "El paciente describe sus síntomas y TORA clasifica la urgencia. Detecta emergencias, prioriza atención y deriva al profesional indicado según el caso.",
+              },
+              {
+                icon: TrendingUp,
+                title: "Atribución de Meta Ads",
+                desc: "Sabés exactamente qué aviso de Instagram o Facebook trajo a cada paciente. TORA saluda al paciente mencionando el aviso que vio y activa el flujo correcto según la campaña.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Verifica pagos con IA",
+                desc: "El paciente envía el comprobante de transferencia por WhatsApp y TORA verifica el monto, el titular y lo asocia al turno automáticamente. Sin revisión manual.",
+              },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2.5 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0">
+                    <Icon className="h-5 w-5 text-brand-500" />
+                  </div>
+                  <h3 className="text-base font-bold">{title}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ─── NOVA: AGENTE INTERNO POR VOZ ────────────────────── */}
+        <section className="mb-16 sm:mb-24">
+          <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-brand-600/5 via-transparent to-indigo-900/5 p-8 sm:p-12">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 mb-4">
+                <Mic className="h-6 w-6 text-brand-500" />
+              </div>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-3">
+                Nova: tu asistente interno por voz
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
+                Mientras TORA atiende a tus pacientes, Nova trabaja con tu equipo.
+                Un copiloto de voz que ejecuta tareas clínicas y administrativas
+                con solo hablar.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {[
+                {
+                  icon: Mic,
+                  title: "Registrá evoluciones clínicas hablando",
+                  desc: 'Terminaste un procedimiento y decís: "Nova, registrá una evolución de control para Sofía Martínez — se realizó ajuste de ortodoncia, sin complicaciones, próxima cita en 4 semanas." Nova lo escribe automáticamente en la historia clínica. Sin tipear, sin abrir la compu, sin perder tiempo.',
+                },
+                {
+                  icon: DollarSign,
+                  title: "Prepará presupuestos con un audio",
+                  desc: 'Decís: "Nova, prepará un presupuesto para Juan Pérez con la limpieza y el blanqueamiento." Nova crea el plan de tratamiento, le agrega los ítems con sus precios, genera el PDF y lo envía por WhatsApp al paciente. Todo sin escribir una línea.',
+                },
+                {
+                  icon: FileText,
+                  title: "Accedé a la historia clínica al instante",
+                  desc: '"Nova, mostrame el historial de María López" — y en segundos tenés en pantalla sus tratamientos, imágenes, recetas y odontograma. Sin buscar carpetas, sin hacer clic.',
+                },
+                {
+                  icon: BarChart3,
+                  title: "Consultá métricas y rendimiento",
+                  desc: '"Nova, cuántos turnos tuvimos esta semana? ¿Cuál es el rendimiento del Dr. Gómez?" Nova consulta la base de datos y te responde al instante con datos reales.',
+                },
+              ].map(({ icon: Icon, title, desc }) => (
+                <div
+                  key={title}
+                  className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0 mt-0.5">
+                      <Icon className="h-5 w-5 text-brand-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold mb-2">{title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 sm:mt-10 text-center">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-500/10 px-4 py-2 rounded-full">
+                <Sparkles className="h-3.5 w-3.5" />
+                50 herramientas disponibles por voz — odontograma, pacientes, turnos, facturación, staff y más
+              </div>
+            </div>
           </div>
         </section>
 
@@ -130,80 +263,7 @@ export default function OfertaPage() {
           </div>
         </section>
 
-        {/* ─── El Asistente ────────────────────────────────────────── */}
-        <section className="mb-16 sm:mb-24">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight mb-3">
-              El Asistente Interno
-            </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
-              Una IA entrenada para trabajar como parte de tu equipo. No reemplaza a nadie:
-              libera a tu personal para que haga lo que realmente importa.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {[
-              {
-                icon: Headphones,
-                title: "Recepcion 24/7",
-                desc: "Atende llamadas y mensajes de WhatsApp automaticamente, incluso fuera del horario de atencion. Tu clinica nunca cierra.",
-                highlight: "Recupera hasta 20 hs semanales de tu recepcionista",
-              },
-              {
-                icon: CalendarCheck,
-                title: "Agenda inteligente",
-                desc: "Agenda, reprograma y confirma turnos sin intervencion humana. El asistente conoce la disponibilidad en tiempo real y asigna los horarios optimos.",
-                highlight: "Reduce ausentismo un 60% con recordatorios automaticos",
-              },
-              {
-                icon: BrainCircuit,
-                title: "Responde todo",
-                desc: "Horarios, precios, promociones, formas de pago, direccion. El asistente responde al instante cualquier consulta frecuente sin derivar a un humano.",
-                highlight: "Elimina las 30+ consultas repetitivas por dia",
-              },
-              {
-                icon: HeartPulse,
-                title: "Ficha clinica digital",
-                desc: "Toma datos del paciente durante la conversacion, crea su historia clinica, asocia imagenes y tratamientos. Todo queda registrado automaticamente.",
-                highlight: "Cero carga manual de datos",
-              },
-              {
-                icon: TimerReset,
-                title: "Recordatorios y seguimiento",
-                desc: "Envia recordatorios por WhatsApp 24h y 2h antes del turno. Hace seguimiento post-consulta y activa recall de pacientes para tratamientos incompletos.",
-                highlight: "Automatiza la cobranza y el follow-up",
-              },
-              {
-                icon: BarChart3,
-                title: "Reportes y metricas",
-                desc: "Mostrador de turnos, conversion de consultas, horas pico, servicios mas solicitados. Todo visible en tiempo real desde el panel.",
-                highlight: "Decidi con datos, no con suposiciones",
-              },
-            ].map(({ icon: Icon, title, desc, highlight }) => (
-              <div
-                key={title}
-                className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0">
-                    <Icon className="h-5 w-5 text-brand-500" />
-                  </div>
-                  <h3 className="text-base font-bold">{title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  {desc}
-                </p>
-                <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-lg w-fit">
-                  <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                  {highlight}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ─── Por que tus colegas ya lo usan ────────────────────────── */}
+        {/* ─── Impacto real ────────────────────────────────────────── */}
         <section className="mb-16 sm:mb-24">
           <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-brand-600/5 via-transparent to-brand-800/5 p-8 sm:p-12">
             <div className="text-center mb-10">
@@ -211,7 +271,7 @@ export default function OfertaPage() {
                 El impacto real
               </h2>
               <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-                Esto no es teoria. Clinicas que ya activaron DentalForge:
+                Clínicas que ya activaron DentalForge:
               </p>
             </div>
 
@@ -221,19 +281,19 @@ export default function OfertaPage() {
                   icon: Users,
                   stat: "40+ hs/sem",
                   label: "que tu recepcionista recupera",
-                  desc: "Una secretaria recibe entre 80 y 120 mensajes/llamadas por dia. El asistente IA responde el 90% automaticamente.",
+                  desc: "Entre 80 y 120 mensajes por día que TORA responde automáticamente. Agenda, consultas, reprogramaciones — todo sin intervención humana.",
                 },
                 {
                   icon: TrendingUp,
                   stat: "2.5x mas",
                   label: "turnos agendados sin esfuerzo",
-                  desc: "Respuesta instantanea 24/7 significa que nunca perdes un paciente porque el telefono sonaba ocupado o era fuera de horario.",
+                  desc: "Respuesta instantánea 24/7 en WhatsApp, Instagram y Facebook. Nunca perdés un paciente porque el teléfono sonaba ocupado o era fuera de horario.",
                 },
                 {
                   icon: Clock,
                   stat: "60% menos",
                   label: "ausentismo en turnos",
-                  desc: "Recordatorios automaticos con confirmacion por WhatsApp. Los pacientes confirman o cancelan con tiempo para reasignar el turno.",
+                  desc: "Recordatorios automáticos con confirmación por WhatsApp. Los pacientes confirman o cancelan con tiempo para reasignar el turno.",
                 },
               ].map(({ icon: Icon, stat, label, desc }) => (
                 <div key={label} className="text-center">
@@ -249,44 +309,7 @@ export default function OfertaPage() {
           </div>
         </section>
 
-        {/* ─── Feature cards resumidas ──────────────────────────────── */}
-        <section className="mb-16 sm:mb-24">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-8 sm:mb-12">
-            Todo lo que necesitas en un solo lugar
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {[
-              {
-                icon: MessageCircle,
-                title: "Chat con IA en WhatsApp",
-                desc: "El agente atiende pacientes, agenda turnos y responde consultas 24/7 automaticamente. Tus pacientes te escriben por WhatsApp y reciben respuesta al instante.",
-              },
-              {
-                icon: Clock,
-                title: "Gestion integral de turnos",
-                desc: "Calendario inteligente con agenda online, recordatorios, confirmacion, cola de espera y reasignacion automatica cuando alguien cancela.",
-              },
-              {
-                icon: Smartphone,
-                title: "Ficha digital del paciente",
-                desc: "Historial clinico completo, imagenes, recetas, plan de tratamiento y evolucion. Accesible desde el celular del profesional en todo momento.",
-              },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div
-                key={title}
-                className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 text-center"
-              >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-brand-50 dark:bg-brand-500/10 mb-4">
-                  <Icon className="h-6 w-6 text-brand-500" />
-                </div>
-                <h3 className="text-base font-bold mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ─── Para quien es ─────────────────────────────────────────── */}
+        {/* ─── Pensado para ─────────────────────────────────────────── */}
         <section className="mb-16 sm:mb-24">
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-8 sm:mb-12">
             Pensado para
@@ -294,17 +317,17 @@ export default function OfertaPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {[
               {
-                title: "Clinicas odontologicas",
+                title: "Clínicas odontológicas",
                 items: [
-                  "Multiples consultorios",
+                  "Múltiples consultorios",
                   "Varios profesionales",
-                  "Recepcion centralizada",
+                  "Recepción centralizada",
                 ],
               },
               {
                 title: "Consultorios individuales",
                 items: [
-                  "Odontologo solo con su asistente",
+                  "Odontólogo solo con su asistente",
                   "Sin personal administrativo",
                   "Quiere automatizar todo",
                 ],
@@ -312,8 +335,8 @@ export default function OfertaPage() {
               {
                 title: "Cadenas y franquicias",
                 items: [
-                  "Gestion centralizada",
-                  "Metricas por sucursal",
+                  "Gestión centralizada",
+                  "Métricas por sucursal",
                   "Marca unificada",
                 ],
               },
@@ -343,11 +366,11 @@ export default function OfertaPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-500" />
             </div>
             <h2 className="text-lg sm:text-xl font-bold mb-2">
-              ¿Listo para verlo en accion?
+              ¿Listo para verlo en acción?
             </h2>
             <p className="text-sm text-muted-foreground max-w-md mx-auto mb-6 leading-relaxed">
-              Primero chatea con el agente IA para experimentar la atencion
-              automatizada. Despues entra a la plataforma y explorala con libertad.
+              Primero chatea con TORA para experimentar la atención automatizada.
+              Después entrá a la plataforma y explorala con libertad.
               Cuando quieras, tu asesor comercial te da las credenciales completas.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -358,7 +381,7 @@ export default function OfertaPage() {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/25 hover:shadow-green-500/35 transition-all duration-200 w-full sm:w-auto"
               >
                 <MessageCircle className="h-4 w-4" />
-                Chatear con el agente IA
+                Chatear con TORA
                 <ExternalLink className="h-3.5 w-3.5 opacity-70" />
               </a>
               <a
@@ -379,7 +402,7 @@ export default function OfertaPage() {
         <footer className="mt-16 sm:mt-24 text-center text-xs text-muted-foreground border-t border-border/60 pt-6">
           <p>
             Esta es una demo del producto{" "}
-            <span className="font-semibold text-foreground">Oferta</span>.
+            <span className="font-semibold text-foreground">DentalForge</span>.
             Las credenciales de acceso completo son provistas por tu asesor
             comercial.
           </p>
