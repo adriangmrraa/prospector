@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { NavbarWrapper } from "@/components/navbar-wrapper";
 import { MainWrapper } from "@/components/main-wrapper";
+import { SWRegister } from "@/components/pwa/sw-register";
 import { getSession } from "@/app/actions/auth";
 
 const inter = Inter({
@@ -18,6 +19,15 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Prospector — Gestión de Prospectos",
   description: "Pipeline de prospección de clínicas dentales en Córdoba",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Prospector",
+    statusBarStyle: "default",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
 };
 
 export default async function RootLayout({
@@ -41,6 +51,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-grid-pattern">
+        <SWRegister />
         <NavbarWrapper session={session} />
         <MainWrapper>{children}</MainWrapper>
       </body>
